@@ -93,11 +93,16 @@ export default function Navbar() {
       zIndex={50}
       py={1}
       px={6}
+      gap={4}
     >
       <Image src={"/logo.svg"} width={16} height={16} alt={"img"} />
       <Box />
       {!isMobile && (
-        <Flex justifyContent={"space-around"} w={{ md: 400, lg: 500 }}>
+        <Flex 
+          justifyContent={"flex-start"}
+          gap={12}
+          w={{ md: 400, lg: 500 }}
+        >
           {links.map(({ label, path }, idx) => {
             return (
               <Link key={idx} as={NextLink} href={`/${path}`}>
@@ -109,7 +114,8 @@ export default function Navbar() {
       )}
       <Flex
         width={"50%"}
-        justifyContent={"flex-end"} gap={4}
+        justifyContent={"flex-end"} 
+        gap={4}
         alignItems={"center"}
       >
         <JoinBtn />
