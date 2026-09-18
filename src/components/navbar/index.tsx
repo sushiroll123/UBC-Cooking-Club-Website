@@ -108,11 +108,11 @@ export default function Navbar() {
         </Flex>
       )}
       <Flex
-        width={"20%"}
-        justifyContent={"space-between"}
+        width={"50%"}
+        justifyContent={"flex-end"} gap={4}
         alignItems={"center"}
       >
-        {!isMobile && <JoinBtn />}
+        <JoinBtn />
         <IconButton
           variant="unstyled"
           aria-label="hamburger"
