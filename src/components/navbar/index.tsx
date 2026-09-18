@@ -95,7 +95,9 @@ export default function Navbar() {
       px={6}
       gap={4}
     >
-      <Image src={"/logo.svg"} width={16} height={16} alt={"img"} />
+      <NextLink href="/">
+        <Image src={"/logo.svg"} width={16} height={16} alt={"img"} />
+      </NextLink>
       <Box />
       {!isMobile && (
         <Flex 
