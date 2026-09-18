@@ -53,7 +53,7 @@ export default function Card(props: { person: MemberType }) {
         <Image
           src={`${
             !person.hasImage
-              ? "/graphics/onion.svg"
+              ? "/graphics/sonion.png"
               : `/about/team/${imgPath}.webp`
           }`}
           width={500}

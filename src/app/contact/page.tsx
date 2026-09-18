@@ -15,9 +15,9 @@ export default function ContactPage() {
       >
         <Box position={"relative"}>
           <Image
-            src="/shallot.svg"
-            width={500}
-            height={500}
+            src="/shallot.png"
+            width={300}
+            height={300}
             w={"100%"}
             h={"100%"}
             objectFit={"cover"}

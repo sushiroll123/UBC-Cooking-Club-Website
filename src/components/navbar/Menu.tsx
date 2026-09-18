@@ -39,7 +39,9 @@ export default function MenuPage({
       px={{ base: 5, sm: 20, md: 40 }}
     >
       <Center>
-        <Image src="/dark-logo.svg" width={20} height={20} alt="logo" mt={3} />
+        <NextLink href="/">
+          <Image src="/dark-logo.svg" width={20} height={20} alt="logo" mt={3} />
+        </NextLink>
       </Center>
       <Text color={"background"} fontSize={"2xl"} mb={4}>
         menu
