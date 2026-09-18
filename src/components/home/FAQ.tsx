@@ -24,7 +24,7 @@ export default function FAQ() {
         left={-80}
       />
       <Box position={"relative"}>
-        <Heading fontFamily={"body"}>FAQ</Heading>
+        <Heading fontFamily={"heading"}>FAQ</Heading>
         <Image
           src={"/home/bulbIcon.svg"}
           alt="bulb"

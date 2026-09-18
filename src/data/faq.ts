@@ -12,7 +12,7 @@ export const faqData: FAQ[] = [
   { // TODO
     question: "How much is membership?",
     answer:
-      "Membership prices are $10 for one term (Sept - Dec 2024, or Jan - Apr 2025) and $17 for the entire year (Sept 2024 - Apr 2025). You can join through the link in our Instagram bio, or in-person at one of our events.",
+      "Membership prices are $10 for one term (Sept - Dec 2026, or Jan - Apr 2027) and $17 for the entire year (Sept 2024 - Apr 2025). You can join through the link in our Instagram bio, or in-person at one of our events.",
   },
   { // TODO
     question: "Why should you join?",

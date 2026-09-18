@@ -48,19 +48,19 @@ export default function Gallery() {
       height={"fit-content"}
       px={{ base: 1, sm: 10 }}
       templateColumns={"repeat(4,1fr)"}
-      templateRows={{ base: "repeat(8,1fr)", md: "repeat(4,1fr)" }}
+      autoRows={"1fr"}
     >
       <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
         <Image src={"/about/gallery/all.webp"} alt="all" {...imageStyle} />
       </Item>
       <Item colSpan={{ base: 4, md: 2 }} rowSpan={2} isTall>
         <Image
-          src={"/about/gallery/yachaejeong.webp"}
+          src={"/about/gallery/steamed-fish.webp"}
           alt="all"
           {...imageStyle}
         />
       </Item>
-      <Item colSpan={{ base: 2, md: 1 }} rowSpan={1}>
+      <Item colSpan={{ base: 2, md: 1 }} rowSpan={2} isTall>
         <Image
           src={"/about/gallery/pan-dumplings.webp"}
           alt="all"
@@ -74,9 +74,9 @@ export default function Gallery() {
           {...imageStyle}
         />
       </Item>
-      <Item colSpan={{ base: 2, md: 1 }} rowSpan={1}>
+      <Item colSpan={{ base: 2, md: 2 }} rowSpan={1}>
         <Image
-          src={"/about/gallery/sushi-crowd.webp"}
+          src={"/about/gallery/poke-workshop.webp"}
           alt="all"
           {...imageStyle}
         />
@@ -120,7 +120,24 @@ export default function Gallery() {
         />
       </Item>
       <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
-        <Image src={"/about/gallery/taco.webp"} alt="all" {...imageStyle} />
+        <Image
+          src={"/about/gallery/poke-people.webp"}
+          alt="alt"
+          {...imageStyle}
+        />
+      </Item>
+      <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
+        <Image src={"/about/gallery/team-halloween.jpeg"} alt="all" {...imageStyle} />
+      </Item>
+      <Item colSpan={{ base: 4, md: 2}} rowSpan={1}>
+        <Image src={"/about/gallery/steamed-fish-workshop.webp"} alt="alt"
+        {...imageStyle}
+      />
+      </Item>
+      <Item colSpan={{ base: 4, md: 2}} rowSpan={1}>
+        <Image src={"/about/gallery/tira-missed-you.webp"} alt="alt"
+        {...imageStyle}
+      />
       </Item>
       <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
         <Image src={"/about/gallery/crowd.webp"} alt="all" {...imageStyle} />

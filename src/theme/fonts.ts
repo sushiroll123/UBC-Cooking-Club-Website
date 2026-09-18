@@ -1,22 +1,23 @@
 import localFont from "next/font/local";
 
-const now = localFont({
+const body = localFont({
   src: [
     {
-      path: "../../public/fonts/Now-Regular.otf",
-      weight: "400",
-    },
-    {
-      path: "../../public/fonts/Now-Bold.otf",
+      path: "../../public/fonts/talina-demo.regular.otf",
       weight: "500",
     },
+    {
+      path: "../../public/fonts/montserrat.medium.otf",
+      weight: "400",
+    },
+    
   ],
   display: "swap",
 });
 
-const moreSugar = localFont({
-  src: "../../public/fonts/MoreSugar-Regular.otf",
+const helloChunky = localFont({
+  src: "../../public/fonts/hello-chunky.regular.otf",
   display: "swap",
 });
 
-export { now, moreSugar };
+export { body, helloChunky };

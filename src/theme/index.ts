@@ -1,7 +1,7 @@
 "use client";
 
 import { extendTheme } from "@chakra-ui/react";
-import { moreSugar, now } from "./fonts";
+import { helloChunky, body } from "./fonts";
 
 const theme = extendTheme({
   colors: {
@@ -12,8 +12,8 @@ const theme = extendTheme({
     subtle: "rgba(255, 251, 235, 100%)",
   },
   fonts: {
-    heading: moreSugar.style.fontFamily,
-    body: now.style.fontFamily,
+    heading: helloChunky.style.fontFamily,
+    body: body.style.fontFamily,
   },
   styles: {
     global: {
