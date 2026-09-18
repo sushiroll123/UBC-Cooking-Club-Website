@@ -10,7 +10,7 @@ export default function UpcomingEvent() {
         Stay Tuned for More!
       </Heading>
       {events.length < 1 ? (
-        <Text fontSize={"xl"}>No Upcoming Events Yet! :)</Text>
+        <Text fontSize={"xl"}>No more upcoming events! :)</Text>
       ) : (
         events.map((event, idx) => {
           return (

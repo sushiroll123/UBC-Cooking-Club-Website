@@ -92,6 +92,9 @@ export default function Event() {
             <Text mb={2}>
               <strong>WHEN:</strong> {curr.time}
             </Text>
+            <Text mb={2}>
+              <strong>STATUS:</strong> {curr.isOpen ? "Open" : "Closed"}
+            </Text>
             <Text>
               <strong>Got Questions?</strong> <br />
               Contact us at <u>ubccookingclubinfo@gmail.com</u>
@@ -130,7 +133,7 @@ export default function Event() {
               )
             ) : (
               <Text color={"secondary"} fontFamily={"heading"} mt={3}>
-                COMING SOON!
+                MORE EVENTS BELOW!
               </Text>
             )}
           </Box>
