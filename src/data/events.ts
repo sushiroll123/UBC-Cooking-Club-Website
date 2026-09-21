@@ -27,7 +27,7 @@ export const upcomingEvents: EventType[] = [
     imagePath: "/graphics/taco.png",
     date: "02",
     month: "OCT",
-    location: "UBC - Collegia",
+    location: "TBA",
     time: "October 2nd, 2026 : 7:30-9:30pm",
     registerLink: "",
     isOpen: false,
