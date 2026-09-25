@@ -16,7 +16,6 @@ export const teamData: TeamType[] = [
       { name: "Anna Xie", role: "Co-President", hasImage: true },
       { name: "Jenny", role: "Co-President", hasImage: false },
       { name: "Daniel Zhang", role: "Developer", hasImage: false },
-      { name: "McEwen Gutierrez", role: "Treasurer", hasImage: true },
     ],
   },
   {
@@ -24,20 +23,31 @@ export const teamData: TeamType[] = [
     members: [
       { name: "Daniel Zhang", role: "Cooking Director", hasImage: false },
       { name: "Elaine Lo", role: "Cooking Director", hasImage: false },
-      { name: "Ada Zhou", role: "Cooking Coordinator" },
+      { name: "Ada Zhou", role: "Cooking Coordinator", hasImage: false},
+      { name: "Renee", role: "Cooking Coordinator", hasImage: false},
+      { name: "Maple", role: "Cooking Coordinator", hasImage: false },
+      { name: "Matthew Wong", role: "Cooking Coordinator", hasImage: false },
+      { name: "Melody", role: "Cooking Coordinator", hasImage: false },
+      { name: "Nicole", role: "Cooking Coordinator", hasImage: false },
+      { name: "Yuma", role: "Cooking Coordinator", hasImage: true },
       { name: "Beatrix", role: "Cooking Coordinator", hasImage: false },
-      { name: "Renee", role: "Cooking Coordinator" },
-      { name: "Matthew", role: "Cooking Coordinator", hasImage: false },
       { name: "Takeo Iwase", role: "Cooking Coordinator", hasImage: true },
     ],
   },
   {
     team: "marketing",
-    members: [],
+    members: [
+      { name: "Eliza", role: "Marketing Director", hasImage: false },
+      { name: "Jeanne", role: "Photographer", hasImage: false },
+      { name: "Fiona", role: "Marketing Coordinator", hasImage: false },
+      { name: "Kimia", role: "Marketing Coordinator", hasImage: false },
+    ],
   },
   {
     team: "partnership",
-    members: [],
+    members: [
+      { name: "Colin", role: "Partnership Representative", hasImage: false },
+    ],
   },
   {
     team: "internal",
@@ -52,7 +62,8 @@ export const teamData: TeamType[] = [
   {
     team: "finance",
     members: [
-      { name: "Aaron", role: "", hasImage: false },
+      { name: "Beatrix", role: "Jr. Treasurer", hasImage: false },
+      { name: "Aaron", role: "Treasurer", hasImage: false },
     ]
   }
 ];
