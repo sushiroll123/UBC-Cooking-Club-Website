@@ -95,6 +95,9 @@ export default function Event() {
             <Text mb={2}>
               <strong>STATUS:</strong> {curr.isOpen ? "Open" : "Closed"}
             </Text>
+            <Text mb={2}>
+              <strong>AVAILABILITY:</strong> {curr.isFull ? "Full" : "Available"}
+            </Text>
             <Text>
               <strong>Got Questions?</strong> <br />
               Contact us at <u>ubccookingclubinfo@gmail.com</u>
