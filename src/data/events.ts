@@ -27,7 +27,7 @@ export const upcomingEvents: EventType[] = [
     imagePath: "/graphics/taco.png",
     date: "02",
     month: "OCT",
-    location: "TBA",
+    location: "Tallwood Collegium, 6088 Walter Gage Rd, Vancouver, BC V6T 1Z4",
     time: "October 2nd, 2026 : 7:30-9:30pm",
     registerLink: "",
     isOpen: false,
