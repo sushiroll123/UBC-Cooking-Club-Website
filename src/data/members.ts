@@ -14,18 +14,18 @@ export const teamData: TeamType[] = [
     team: "admin",
     members: [
       { name: "Anna Xie", role: "Co-President", hasImage: true },
-      { name: "Jenny", role: "Co-President", hasImage: false },
+      { name: "Jenny", role: "Co-President", hasImage: true },
       { name: "Daniel Zhang", role: "Developer", hasImage: false },
     ],
   },
   {
     team: "cooking",
     members: [
-      { name: "Daniel Zhang", role: "Cooking Director", hasImage: false },
+      { name: "Daniel Zhang", role: "Cooking Director", hasImage: true },
       { name: "Elaine Lo", role: "Cooking Director", hasImage: false },
       { name: "Ada Zhou", role: "Cooking Coordinator", hasImage: false},
-      { name: "Renee", role: "Cooking Coordinator", hasImage: false},
-      { name: "Maple", role: "Cooking Coordinator", hasImage: false },
+      { name: "Renee", role: "Cooking Coordinator", hasImage: true},
+      { name: "Maple", role: "Cooking Coordinator", hasImage: true },
       { name: "Matthew Wong", role: "Cooking Coordinator", hasImage: false },
       { name: "Melody", role: "Cooking Coordinator", hasImage: false },
       { name: "Nicole", role: "Cooking Coordinator", hasImage: false },
@@ -46,7 +46,9 @@ export const teamData: TeamType[] = [
   {
     team: "partnership",
     members: [
+      { name: "Luna", role: "Partnership Director", hasImage: false },
       { name: "Colin", role: "Partnership Representative", hasImage: false },
+      { name: "Anna", role: "Partnership Representative", hasImage: false },
     ],
   },
   {
