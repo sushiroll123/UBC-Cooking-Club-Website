@@ -15,7 +15,7 @@ export const teamData: TeamType[] = [
     members: [
       { name: "Anna Xie", role: "Co-President", hasImage: true },
       { name: "Jenny", role: "Co-President", hasImage: true },
-      { name: "Daniel Zhang", role: "Developer", hasImage: false },
+      { name: "Daniel Zhang", role: "Developer", hasImage: true },
     ],
   },
   {
