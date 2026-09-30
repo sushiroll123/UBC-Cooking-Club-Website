@@ -96,7 +96,7 @@ export default function Event() {
               <strong>STATUS:</strong> {curr.isOpen ? "Open" : "Closed"}
             </Text>
             <Text mb={2}>
-              <strong>AVAILABILITY:</strong> {curr.isFull ? "Full" : "Available"}
+              <strong>AVAILABILITY:</strong> {curr.availability}
             </Text>
             <Text>
               <strong>Got Questions?</strong> <br />
