@@ -7,7 +7,7 @@ interface EventType {
   time: string;
   registerLink: string;
   isOpen: boolean;
-  isFull: boolean;
+  availability: string;
 }
 
 export const upcomingEvents: EventType[] = [
@@ -31,6 +31,6 @@ export const upcomingEvents: EventType[] = [
     time: "October 2nd, 2026 : 7:30-9:30pm",
     registerLink: "https://forms.gle/7eTsKP5ztUSHQ51K8",
     isOpen: true,
-    isFull: false,
+    availability: "Almost Full!",
   },
 ];
