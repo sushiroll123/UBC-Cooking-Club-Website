@@ -31,8 +31,8 @@ export const upcomingEvents: EventType[] = [
     location: "Tallwood Collegium, 6088 Walter Gage Rd, Vancouver, BC V6T 1Z4",
     time: "October 2nd, 2026 : 7:30-9:30pm",
     registerLink: "https://forms.gle/7eTsKP5ztUSHQ51K8",
-    isOpen: true,
-    isFull: false,
-    availability: "Almost Full!",
+    isOpen: false,
+    isFull: true,
+    availability: "Full! :(",
   },
 ];
