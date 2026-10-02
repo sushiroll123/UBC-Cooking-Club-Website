@@ -33,6 +33,6 @@ export const upcomingEvents: EventType[] = [
     registerLink: "https://forms.gle/7eTsKP5ztUSHQ51K8",
     isOpen: false,
     isFull: true,
-    availability: "Full! :(",
+    availability: "4 Drop-In Spots",
   },
 ];
