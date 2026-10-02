@@ -53,7 +53,7 @@ export default function Gallery() {
           w={"100%"}
           textAlign={"center"}
         >
-          Our Gallery
+          Gallery
       </Heading>
       <Grid
         w={"100%"}

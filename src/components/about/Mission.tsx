@@ -24,10 +24,10 @@ export default function Mission({ children }: ParagraphProps ) {
                 px={{ base: 4, md: 10 }}
                 pt={0}
                 pb={6}
-                gap={{ base: 2, md: 2 }}
+                gap={{ base: 2, md: 4 }}
                 direction={{ base: "column", md: "row" }}
                 align="center"
-                justify="center"
+                justify="flex-start"
             >
                 <Box w="250px" h="200px" overflow="hidden" flexShrink={0}>
                     <Image
@@ -40,11 +40,10 @@ export default function Mission({ children }: ParagraphProps ) {
                         objectFit="cover"
                         objectPosition="center bottom"
                     />
-                    </Box>
+                </Box>
                 <Text 
                     fontSize={{ base: "md", md: "lg" }}
-                    maxW="5xl"
-                    mx="auto"
+                    maxW="100%"
                     lineHeight="short"
                 >
                     {children}
