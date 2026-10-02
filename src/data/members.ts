@@ -41,14 +41,16 @@ export const teamData: TeamType[] = [
       { name: "Jeanne", role: "Photographer", hasImage: false },
       { name: "Fiona", role: "Marketing Coordinator", hasImage: false },
       { name: "Kimia", role: "Marketing Coordinator", hasImage: false },
+      { name: "Kristina", role: "Marketing Coordinator", hasImage: false },
     ],
   },
   {
     team: "partnership",
     members: [
       { name: "Luna", role: "Partnership Director", hasImage: false },
-      { name: "Colin", role: "Partnership Representative", hasImage: false },
-      { name: "Anna", role: "Partnership Representative", hasImage: false },
+      { name: "Colin", role: "Partnership Coordinator", hasImage: false },
+      { name: "Anna", role: "Partnership Coordinator", hasImage: false },
+      { name: "Ashley", role: "Partnership Coordinator", hasImage: false },
     ],
   },
   {
