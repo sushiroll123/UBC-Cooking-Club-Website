@@ -26,8 +26,16 @@ export default function Team() {
   return (
     <Container maxW={"4xl"} position={"relative"}>
       <BackgroundImages />
-      <Heading textAlign={"center"} mt={20} mb={10}>
-        Meet the Team!
+      <Heading
+          color={"primary"}
+          fontSize={{ base: "xl", md: "5xl" }}
+          mt={20}
+          mb={10}
+          lineHeight={"none"}
+          w={"100%"}
+          textAlign={"center"}
+      >
+          Meet the Team!
       </Heading>
 
       <Tabs position="relative" variant="unstyled">

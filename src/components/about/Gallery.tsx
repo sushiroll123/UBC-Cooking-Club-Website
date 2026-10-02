@@ -25,7 +25,7 @@ const Item = ({ children, isTall = false, ...rest }: CustomItemProps) => {
       background={"white"}
       borderRadius={"2xl"}
       overflow={"hidden"}
-      maxH={isTall ? "100%" : { base: "100%", lg: 300 }}
+      maxH={isTall ? "100%" : { base: "100%", lg: 500 }}
       m={{ base: 1, md: 2 }}
       {...rest}
     >
@@ -43,105 +43,118 @@ export default function Gallery() {
     objectFit: "cover",
   };
   return (
-    <Grid
-      w={"100%"}
-      height={"fit-content"}
-      px={{ base: 1, sm: 10 }}
-      templateColumns={"repeat(4,1fr)"}
-      autoRows={"1fr"}
-    >
-      <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
-        <Image src={"/about/gallery/all.webp"} alt="all" {...imageStyle} />
-      </Item>
-      <Item colSpan={{ base: 4, md: 2 }} rowSpan={2} isTall>
-        <Image
-          src={"/about/gallery/steamed-fish.webp"}
-          alt="all"
-          {...imageStyle}
-        />
-      </Item>
-      <Item colSpan={{ base: 2, md: 1 }} rowSpan={2} isTall>
-        <Image
-          src={"/about/gallery/pan-dumplings.webp"}
-          alt="all"
-          {...imageStyle}
-        />
-      </Item>
-      <Item colSpan={{ base: 2, md: 1 }} rowSpan={2} isTall>
-        <Image
-          src={"/about/gallery/sushi-bake.webp"}
-          alt="all"
-          {...imageStyle}
-        />
-      </Item>
-      <Item colSpan={{ base: 2, md: 2 }} rowSpan={1}>
-        <Image
-          src={"/about/gallery/poke-workshop.webp"}
-          alt="all"
-          {...imageStyle}
-        />
-      </Item>
-      <Item colSpan={{ base: 2, md: 1 }} rowSpan={1}>
-        <LinkBox
-          as={Center}
-          position={"relative"}
+    <>
+      <Heading
+          color={"primary"}
+          fontSize={{ base: "xl", md: "5xl" }}
+          mt={0}
+          mb={10}
+          lineHeight={"none"}
           w={"100%"}
-          h={"100%"}
           textAlign={"center"}
-          flexDir={"column"}
-          p={2}
         >
+          Our Gallery
+      </Heading>
+      <Grid
+        w={"100%"}
+        height={"fit-content"}
+        px={{ base: 1, sm: 10 }}
+        templateColumns={"repeat(4,1fr)"}
+        autoRows={"1fr"}
+      >
+        <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
+          <Image src={"/about/gallery/all.webp"} alt="all" {...imageStyle} />
+        </Item>
+        <Item colSpan={{ base: 4, md: 2 }} rowSpan={2} isTall>
           <Image
-            src={"/about/gallery/instagram.svg"}
+            src={"/about/gallery/steamed-fish.webp"}
             alt="all"
-            width={10}
-            height={10}
-            w={"100%"}
-            h={"70%"}
-            objectFit={"contain"}
-            position={"relative"}
+            {...imageStyle}
           />
-          <Heading fontSize={{ base: "2xl", sm: "3xl", md: "4xl" }}>
-            <LinkOverlay
-              as={NextLink}
-              href="https://www.instagram.com/cookingclububc"
-              target="_blank"
-            >
-              Follow Us!
-            </LinkOverlay>
-          </Heading>
-        </LinkBox>
-      </Item>
-      <Item colSpan={{ base: 2, md: 1 }} rowSpan={1}>
-        <Image
-          src={"/about/gallery/dumplings.webp"}
-          alt="all"
+        </Item>
+        <Item colSpan={{ base: 2, md: 1 }} rowSpan={2} isTall>
+          <Image
+            src={"/about/gallery/pan-dumplings.webp"}
+            alt="all"
+            {...imageStyle}
+          />
+        </Item>
+        <Item colSpan={{ base: 2, md: 1 }} rowSpan={2} isTall>
+          <Image
+            src={"/about/gallery/sushi-bake.webp"}
+            alt="all"
+            {...imageStyle}
+          />
+        </Item>
+        <Item colSpan={{ base: 2, md: 2 }} rowSpan={1}>
+          <Image
+            src={"/about/gallery/poke-workshop.webp"}
+            alt="all"
+            {...imageStyle}
+          />
+        </Item>
+        <Item colSpan={{ base: 2, md: 1 }} rowSpan={1}>
+          <LinkBox
+            as={Center}
+            position={"relative"}
+            w={"100%"}
+            h={"100%"}
+            textAlign={"center"}
+            flexDir={"column"}
+            p={2}
+          >
+            <Image
+              src={"/about/gallery/instagram.svg"}
+              alt="all"
+              width={10}
+              height={10}
+              w={"100%"}
+              h={"70%"}
+              objectFit={"contain"}
+              position={"relative"}
+            />
+            <Heading fontSize={{ base: "2xl", sm: "3xl", md: "4xl" }}>
+              <LinkOverlay
+                as={NextLink}
+                href="https://www.instagram.com/cookingclububc"
+                target="_blank"
+              >
+                Follow Us!
+              </LinkOverlay>
+            </Heading>
+          </LinkBox>
+        </Item>
+        <Item colSpan={{ base: 2, md: 1 }} rowSpan={1}>
+          <Image
+            src={"/about/gallery/dumplings.webp"}
+            alt="all"
+            {...imageStyle}
+          />
+        </Item>
+        <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
+          <Image
+            src={"/about/gallery/poke-people.webp"}
+            alt="alt"
+            {...imageStyle}
+          />
+        </Item>
+        <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
+          <Image src={"/about/gallery/team-halloween.jpeg"} alt="all" {...imageStyle} />
+        </Item>
+        <Item colSpan={{ base: 4, md: 2}} rowSpan={1}>
+          <Image src={"/about/gallery/steamed-fish-workshop.webp"} alt="alt"
           {...imageStyle}
         />
-      </Item>
-      <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
-        <Image
-          src={"/about/gallery/poke-people.webp"}
-          alt="alt"
+        </Item>
+        <Item colSpan={{ base: 4, md: 2}} rowSpan={1}>
+          <Image src={"/about/gallery/tira-missed-you.webp"} alt="alt"
           {...imageStyle}
         />
-      </Item>
-      <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
-        <Image src={"/about/gallery/team-halloween.jpeg"} alt="all" {...imageStyle} />
-      </Item>
-      <Item colSpan={{ base: 4, md: 2}} rowSpan={1}>
-        <Image src={"/about/gallery/steamed-fish-workshop.webp"} alt="alt"
-        {...imageStyle}
-      />
-      </Item>
-      <Item colSpan={{ base: 4, md: 2}} rowSpan={1}>
-        <Image src={"/about/gallery/tira-missed-you.webp"} alt="alt"
-        {...imageStyle}
-      />
-      </Item>
-      <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
-        <Image src={"/about/gallery/crowd.webp"} alt="all" {...imageStyle} />
-      </Item>
-    </Grid>
+        </Item>
+        <Item colSpan={{ base: 4, md: 2 }} rowSpan={1}>
+          <Image src={"/about/gallery/crowd.webp"} alt="all" {...imageStyle} />
+        </Item>
+      </Grid>
+    </>
   );
 }
