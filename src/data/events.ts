@@ -23,16 +23,4 @@ export const upcomingEvents: EventType[] = [
   //   isOpen: false,
   //   isFull: false,
   // },
-  {
-    title: "Onigiri Workshop",
-    imagePath: "/graphics/taco.png",
-    date: "02",
-    month: "OCT",
-    location: "Tallwood Collegium, 6088 Walter Gage Rd, Vancouver, BC V6T 1Z4",
-    time: "October 2nd, 2026 : 7:30-9:30pm",
-    registerLink: "https://forms.gle/7eTsKP5ztUSHQ51K8",
-    isOpen: false,
-    isFull: true,
-    availability: "4 Drop-In Spots",
-  },
 ];
