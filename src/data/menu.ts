@@ -9,6 +9,46 @@ export interface MenuType {
 
 export const menuData: MenuType[] = [
   {
+    id: "onigiriworkshop",
+    title: "Onigiri Workshop",
+    description:
+      "Rice ball with various fillings wrapped in dried seaweed",
+    tags: ["Japanese", "Customizable", "Snack"],
+    ingredients: [
+      "1 kg sushi round rice, cooked and salted beforehand",
+      "One canned tuna", 
+      "Four tbsp kewpie mayo (together in a small bowl)",
+      "½ tbsp of soy sauce",
+      "One canned salmon", 
+      "150g cream cheese, slightly thawed in room temperature", 
+      "Six pickled plums",
+      "Furikake (optional, retrieved from the front if wanted)", 
+      "six Nori sheet, cut into half",
+      "pepper",
+    ],
+    steps: [
+      "In a bowl, add in canned tuna (drained), kewpie mayo, preferred amount of salt and " +
+      "pepper. Thoroughly mix the ingredients until evenly mixed.",
+
+      "In a separate bowl, use a spoon to smash/whip the cream cheese until soften, " +
+      "then add in drained salmon and soy sauce, thoroughly mix until even.",
+
+      "You now have the option to dictate what flavour you want to make for onigiri. " +
+      "Remember to spread your hand with some salt solution if you want to shape " +
+      "the onigiri with your bare hand.",
+
+      "If choose to have onigiri with filling: Grab a fist size of rice, make a concave " +
+      "shape in the middle. Add a scoop of filling onto the concave, before molding the " +
+      "rice ball into a triangle shape with your hand or the nori method " +
+      "(will be informed through tutorial) or with saran wrap.",
+
+      "If choose to not have filling: You can either mix the rice with " +
+      "furikake or mix with just go with plain salted rice.  Grab a fist " +
+      "size of rice, mold the rice into triangle shape with either your hand, " + 
+      "saran wrap, or nori."
+    ],
+  },
+  {
     id: "lahmajounworkshop",
     title: "Lahmajoun Workshop",
     description:
