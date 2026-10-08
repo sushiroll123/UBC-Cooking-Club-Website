@@ -1,10 +1,14 @@
 import { upcomingEvents } from "@/data";
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { useState } from "react";
+import { Box, Button, Flex, Heading, Text, chakra, Collapse, useDisclosure } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "../Image";
 
 export default function Event() {
   const curr = upcomingEvents[0];
+  const Iframe = chakra("iframe");
+  const [showMap, setShowMap] = useState(false);
+
   return (
     <Box pt={10} position={"relative"}>
       <Heading
@@ -36,12 +40,18 @@ export default function Event() {
           my={10}
           mx={{ base: "5%", md: "15%" }}
           // maxW={"6xl"}
-          direction={{ base: "column", md: "row" }}
+          direction={{ base: "column", md: "column" }}
           borderRadius={"lg"}
           overflow={"hidden"}
           boxShadow={"xl"}
           height={{ base: "fit-content" }}
+          background={"rgba(163, 197, 225, 50%)"}
         >
+          <Flex
+            position={ "relative" }
+            height={{ base: "fit-content" }}
+            direction={{ base: "column", md: "row" }}
+          >
           <Box
             position={"relative"}
             width={{ base: "100%", md: 400, lg: "60%" }}
@@ -87,16 +97,28 @@ export default function Event() {
               {curr.title}
             </Heading>
             <Text mt={2}>
-              <strong>WHERE:</strong> {curr.location}
+              <strong>WHERE:</strong> {curr.location} 
             </Text>
+            <Button 
+              my={2}
+              onClick={() => setShowMap((prev) => !prev)}
+              transition={"transform 0.2s ease, box-shadow 0.2s ease"}
+              _hover={{
+                    filter: "brightness(1)",
+                  }}
+              _active={{
+                boxShadow:
+                  "0px 0px 0px #FFF9E1, 0 6px 10px rgba(0, 0, 0, 0.2)",
+                transform: "translateY(2px)",
+              }}
+            >
+                {showMap ? "Hide Map" : "Show Map"}
+              </Button>
             <Text mb={2}>
               <strong>WHEN:</strong> {curr.time}
             </Text>
             <Text mb={2}>
               <strong>STATUS:</strong> {curr.isOpen ? "Open" : "Closed"}
-            </Text>
-            <Text mb={2}>
-              <strong>AVAILABILITY:</strong> {curr.availability}
             </Text>
             <Text>
               <strong>Got Questions?</strong> <br />
@@ -104,12 +126,8 @@ export default function Event() {
             </Text>
 
             {curr.isOpen ? (
-              curr.isFull ? (
-                <Text color={"secondary"} fontFamily={"heading"} mt={3}>
-                  Event is full!
-                </Text>
-              ) : (
                 <Button
+                  my={3}
                   as={NextLink}
                   href={curr.registerLink}
                   target="_blank"
@@ -133,17 +151,29 @@ export default function Event() {
                 >
                   Register
                 </Button>
-              )
             ) : (
               <Text color={"secondary"} fontFamily={"heading"} mt={3}>
                 MORE EVENTS BELOW!
               </Text>
             )}
           </Box>
+          </Flex>
+            <Collapse in={showMap} animateOpacity unmountOnExit>
+             <Box>
+              <Iframe
+                src={curr.mapUrl}
+                width="100%" 
+                height="xs"
+                style={{ border: 0 }} 
+                loading="lazy" 
+                referrerPolicy="strict-origin-when-cross-origin"
+              />
+            </Box>
+          </Collapse>
         </Flex>
       ) : (
         <Text textAlign={"center"} my={10} fontSize={"xl"}>
-          Stay tuned for more workshops next year!
+          Stay tuned for more upcoming workshops!
         </Text>
       )}
     </Box>

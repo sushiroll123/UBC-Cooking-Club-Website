@@ -7,8 +7,7 @@ interface EventType {
   time: string;
   registerLink: string;
   isOpen: boolean;
-  isFull: boolean;
-  availability: string;
+  mapUrl: string;
 }
 
 export const upcomingEvents: EventType[] = [
