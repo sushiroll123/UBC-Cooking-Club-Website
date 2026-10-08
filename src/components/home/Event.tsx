@@ -52,111 +52,111 @@ export default function Event() {
             height={{ base: "fit-content" }}
             direction={{ base: "column", md: "row" }}
           >
-          <Box
-            position={"relative"}
-            width={{ base: "100%", md: 400, lg: "60%" }}
-            height={{ base: 300, md: 450 }}
-            background={"accent"}
-          >
-            <Image
-              src={curr.imagePath}
-              alt="event"
-              width={200}
-              height={200}
-              objectFit={"contain"}
-              w={"100%"}
-              h={"100%"}
-            />
             <Box
-              position={"absolute"}
-              aspectRatio={1}
-              top={0}
-              right={0}
-              textAlign={"center"}
-              w={28}
-              bg={"rgba(163, 197, 225, 50%)"}
-              p={3}
+              position={"relative"}
+              width={{ base: "100%", md: 400, lg: "60%" }}
+              height={{ base: 300, md: 450 }}
+              background={"accent"}
             >
-              <Heading fontStyle={"regular"} fontSize={"5xl"}>
-                {curr.date}
-              </Heading>
-              <Text fontWeight={"bold"}>{curr.month}</Text>
+              <Image
+                src={curr.imagePath}
+                alt="event"
+                width={200}
+                height={200}
+                objectFit={"contain"}
+                w={"100%"}
+                h={"100%"}
+              />
+              <Box
+                position={"absolute"}
+                aspectRatio={1}
+                top={0}
+                right={0}
+                textAlign={"center"}
+                w={28}
+                bg={"rgba(163, 197, 225, 50%)"}
+                p={3}
+              >
+                <Heading fontStyle={"regular"} fontSize={"5xl"}>
+                  {curr.date}
+                </Heading>
+                <Text fontWeight={"bold"}>{curr.month}</Text>
+              </Box>
             </Box>
-          </Box>
-          <Box
-            width={{ base: "100%", md: 400, lg: "40%" }}
-            background={"accent"}
-            px={5}
-            py={2}
-          >
-            <Heading
-              fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
-              my={3}
-              fontWeight={"regular"}
+            <Box
+              width={{ base: "100%", md: 400, lg: "40%" }}
+              background={"accent"}
+              px={5}
+              py={2}
             >
-              {curr.title}
-            </Heading>
-            <Text mt={2}>
-              <strong>WHERE:</strong> {curr.location} 
-            </Text>
-            <Button 
-              my={2}
-              onClick={() => setShowMap((prev) => !prev)}
-              transition={"transform 0.2s ease, box-shadow 0.2s ease"}
-              _hover={{
-                    filter: "brightness(1)",
-                  }}
-              _active={{
-                boxShadow:
-                  "0px 0px 0px #FFF9E1, 0 6px 10px rgba(0, 0, 0, 0.2)",
-                transform: "translateY(2px)",
-              }}
-            >
-                {showMap ? "Hide Map" : "Show Map"}
-              </Button>
-            <Text mb={2}>
-              <strong>WHEN:</strong> {curr.time}
-            </Text>
-            <Text mb={2}>
-              <strong>STATUS:</strong> {curr.isOpen ? "Open" : "Closed"}
-            </Text>
-            <Text>
-              <strong>Got Questions?</strong> <br />
-              Contact us at <u>ubccookingclubinfo@gmail.com</u>
-            </Text>
-
-            {curr.isOpen ? (
-                <Button
-                  my={3}
-                  as={NextLink}
-                  href={curr.registerLink}
-                  target="_blank"
-                  size={"md"}
-                  mt={3}
-                  background={"secondary"}
-                  color={"background"}
-                  borderRadius={"md"}
-                  fontFamily={"heading"}
-                  fontWeight={"regular"}
-                  boxShadow={"0 5px 0px #FFF9E1, 0 8px 15px rgba(0, 0, 0, 0.2)"}
-                  transition={"transform 0.2s ease, box-shadow 0.2s ease"}
-                  _hover={{
-                    filter: "brightness(1)",
-                  }}
-                  _active={{
-                    boxShadow:
-                      "0px 0px 0px #FFF9E1, 0 6px 10px rgba(0, 0, 0, 0.2)",
-                    transform: "translateY(2px)",
-                  }}
-                >
-                  Register
-                </Button>
-            ) : (
-              <Text color={"secondary"} fontFamily={"heading"} mt={3}>
-                MORE EVENTS BELOW!
+              <Heading
+                fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
+                my={3}
+                fontWeight={"regular"}
+              >
+                {curr.title}
+              </Heading>
+              <Text mt={2}>
+                <strong>WHERE:</strong> {curr.location} 
               </Text>
-            )}
-          </Box>
+              <Button 
+                my={2}
+                onClick={() => setShowMap((prev) => !prev)}
+                transition={"transform 0.2s ease, box-shadow 0.2s ease"}
+                _hover={{
+                      filter: "brightness(1)",
+                    }}
+                _active={{
+                  boxShadow:
+                    "0px 0px 0px #FFF9E1, 0 6px 10px rgba(0, 0, 0, 0.2)",
+                  transform: "translateY(2px)",
+                }}
+              >
+                  {showMap ? "Hide Map" : "Show Map"}
+                </Button>
+              <Text mb={2}>
+                <strong>WHEN:</strong> {curr.time}
+              </Text>
+              <Text mb={2}>
+                <strong>STATUS:</strong> {curr.isOpen ? "Open" : "Closed"}
+              </Text>
+              <Text>
+                <strong>Got Questions?</strong> <br />
+                Contact us at <u>ubccookingclubinfo@gmail.com</u>
+              </Text>
+
+              {curr.isOpen ? (
+                  <Button
+                    my={3}
+                    as={NextLink}
+                    href={curr.registerLink}
+                    target="_blank"
+                    size={"md"}
+                    mt={3}
+                    background={"secondary"}
+                    color={"background"}
+                    borderRadius={"md"}
+                    fontFamily={"heading"}
+                    fontWeight={"regular"}
+                    boxShadow={"0 5px 0px #FFF9E1, 0 8px 15px rgba(0, 0, 0, 0.2)"}
+                    transition={"transform 0.2s ease, box-shadow 0.2s ease"}
+                    _hover={{
+                      filter: "brightness(1)",
+                    }}
+                    _active={{
+                      boxShadow:
+                        "0px 0px 0px #FFF9E1, 0 6px 10px rgba(0, 0, 0, 0.2)",
+                      transform: "translateY(2px)",
+                    }}
+                  >
+                    Register
+                  </Button>
+              ) : (
+                <Text color={"secondary"} fontFamily={"heading"} mt={3}>
+                  MORE EVENTS BELOW!
+                </Text>
+              )}
+            </Box>
           </Flex>
             <Collapse in={showMap} animateOpacity unmountOnExit>
              <Box>
