@@ -44,7 +44,7 @@ export default function Landing() {
         top={0}
         width={"100%"}
         height={"100%"}
-        background={"rgb(80,80,80,40%)"}
+        background={"rgb(0,0,0,40%)"}
       />
     </Box>
   );
