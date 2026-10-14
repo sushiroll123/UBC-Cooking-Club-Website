@@ -8,7 +8,7 @@ const schema = z.object({
   message: z.string().min(1),
 });
 
-const resend = new Resend(`${process.env.NEXT_RESEND_API_KEY}`);
+const resend = new Resend(process.env.NEXT_RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   let body: unknown;
@@ -41,7 +41,8 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(data);
-  } catch {
+  } catch (err) {
+    console.error("Contact form error", err)
     return NextResponse.json(
       { message: "Service unavailable" },
       { status: 502 }
