@@ -11,8 +11,19 @@ const schema = z.object({
 const resend = new Resend(`${process.env.NEXT_RESEND_API_KEY}`);
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { email, subject, message } = schema.parse(body);
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ message: "Invalid request" }, { status: 400 });
+  }
+
+  const parsed = schema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ message: "Invalid request" }, { status: 400 });
+  }
+
+  const { email, subject, message } = parsed.data;
 
   try {
     const { data, error } = await resend.emails.send({
@@ -23,11 +34,17 @@ export async function POST(req: NextRequest) {
     });
 
     if (error) {
-      return NextResponse.json(error, { status: 400 });
+      return NextResponse.json(
+        { message: "Service unavailable" },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json(data);
   } catch {
-    return NextResponse.json("Something is wrong", { status: 400 });
+    return NextResponse.json(
+      { message: "Service unavailable" },
+      { status: 502 }
+    );
   }
 }

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 
@@ -8,14 +7,21 @@ const schema = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { email } = schema.parse(body);
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ message: "Invalid request" }, { status: 400 });
+  }
 
-  if (!email) return NextResponse.json("Email is required", { status: 400 });
+  const parsed = schema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ message: "Invalid request" }, { status: 400 });
+  }
 
   try {
     const data = {
-      email_address: email,
+      email_address: parsed.data.email,
       status: "subscribed",
     };
     const response = await axios.post(
@@ -31,16 +37,16 @@ export async function POST(req: NextRequest) {
 
     if (response.status >= 400) {
       return NextResponse.json(
-        { message: "Fail to subscribe" },
-        { status: 404 }
+        { message: "Service unavailable" },
+        { status: 502 }
       );
     }
 
     return NextResponse.json("Subscribed", { status: 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
-      { message: "Something is wrong", error },
-      { status: 400 }
+      { message: "Service unavailable" },
+      { status: 502 }
     );
   }
 }

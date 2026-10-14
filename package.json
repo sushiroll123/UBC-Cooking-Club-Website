@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
@@ -32,11 +35,16 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@playwright/test": "1.56.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "8.46.4",
+    "@typescript-eslint/parser": "8.46.4",
     "eslint": "^8",
-    "eslint-config-next": "14.2.6",
-    "typescript": "^5"
+    "eslint-config-next": "15.5.25",
+    "typescript": "^5",
+    "vite": "6.4.1",
+    "vitest": "4.1.11"
   }
 }

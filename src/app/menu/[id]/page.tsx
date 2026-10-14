@@ -1,6 +1,7 @@
 import Image from "@/components/Image";
 import BulletIcons from "@/components/menu/BulletIcons";
 import { menuData } from "@/data";
+import { notFound } from "next/navigation";
 import {
   Box,
   Container,
@@ -16,7 +17,7 @@ import {
 
 export async function generateStaticParams() {
   return menuData.map((post) => ({
-    slug: post.id,
+    id: post.id,
   }));
 }
 
@@ -27,7 +28,8 @@ export default async function Recipe({
 }) {
   const id = (await params).id;
 
-  const menu = menuData.filter((data) => data.id === id)[0];
+  const menu = menuData.find((data) => data.id === id);
+  if (!menu) notFound();
 
   return (
     <Container
