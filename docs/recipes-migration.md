@@ -21,3 +21,20 @@ When the token is available, run `npm run recipes:import -- --apply --dataset de
 Imported recipes are **drafts** and legacy tags start unapproved. An administrator must review tag labels and approve them before publishing recipes. This keeps unchecked legacy tags from bypassing Studio's publication validation. After approval, use the local Studio to review all 11 images, links, and copy, then publish in development for reader tests. There is no production import in Tasks 2–5.
 
 The nonsecret local dry-run report is in `docs/recipes-import-dry-run.json`. A real development parity report must replace or accompany it only after a successful authenticated import and verify run.
+
+## Development publication refresh
+
+The website's `/api/sanity/revalidate` route accepts signed notifications from this project's `development` dataset. The route checks the signature over the raw request body, limits the body to 64 KiB, checks the project and dataset, and refreshes the recipe query tag, `/menu`, and affected detail paths. A tag change also refreshes all detail routes. Public reads use the published perspective with a five-minute Next.js revalidation interval. A missed webhook is recovered by a later read after that interval; a stale response can still be served once while Next.js refreshes it, and Sanity's CDN may have its own propagation delay. Do not promise immediate removal during an outage.
+
+Once a development preview website exists, create a **document webhook** in the verified project's API settings with these values:
+
+- Name: `Development recipe publication refresh`.
+- Dataset: `development` only. URL: the preview origin followed by `/api/sanity/revalidate`, with no secret in the URL.
+- Method: `POST`; trigger on Create, Update, and Delete. Leave draft and version triggers off. API version: `2026-10-11`.
+- Filter: `(before()._type in ["recipe", "tag"] || after()._type in ["recipe", "tag"]) && sanity::projectId() == "1m7uu6hy" && sanity::dataset() == "development"`
+- Projection: `{ "projectId": sanity::projectId(), "dataset": sanity::dataset(), "type": coalesce(after()._type, before()._type), "beforeSlug": before().slug.current, "afterSlug": after().slug.current }`
+- Set a unique signing secret in the webhook's **Secret** field and set the same value as the preview website's server-only `SANITY_REVALIDATE_SECRET`. Never add it to a URL, Git, a public environment variable, or a command argument.
+
+Do not create this webhook until its preview target and secret exist. No webhook or hosted environment has been changed during local implementation. Sanity's [webhook documentation](https://www.sanity.io/docs/content-lake/webhooks) describes published-only triggers and signed delivery; its [GROQ filter documentation](https://www.sanity.io/docs/developer-guides/filters-in-groq-powered-webhooks) describes `before()`, `after()`, and the project/dataset functions.
+
+For preview acceptance, set `RECIPE_SOURCE=sanity`, `SANITY_PROJECT_ID=1m7uu6hy`, `SANITY_DATASET=development`, and `SANITY_REVALIDATE_SECRET` only in the preview configuration. Publish a reviewed development recipe and confirm its card and direct URL. Edit its title or slug; confirm both the old and new paths. Unpublish it; confirm its card disappears and the old URL returns 404. Repeat with the webhook temporarily disabled to observe the five-minute recovery behavior. A tag approval change should also refresh cards and details. The optional browser check `CMS_PREVIEW_URL=https://... CMS_PUBLISHED_SLUG=... CMS_UNPUBLISHED_SLUG=... npm run test:e2e` verifies published and unpublished URLs after those editorial actions; it skips without those variables. Preview setup and these live checks are pending.
