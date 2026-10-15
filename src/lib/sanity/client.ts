@@ -9,7 +9,7 @@ export interface SanityConnection {
 export function sanityConnection(): SanityConnection {
   const projectId = process.env.SANITY_PROJECT_ID;
   const dataset = process.env.SANITY_DATASET;
-  if (!projectId || !dataset) throw new Error("Sanity project and dataset must be configured");
+  if (projectId !== "1m7uu6hy" || !dataset) throw new Error("Verified Sanity project and dataset must be configured");
   return { projectId, dataset, apiVersion: process.env.SANITY_API_VERSION || "2026-10-11" };
 }
 
