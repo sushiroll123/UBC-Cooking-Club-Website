@@ -36,6 +36,21 @@ describe("publishable recipe contract", () => {
     expect(validatePublishable(base, references)).toEqual({ ok: true });
   });
 
+  it("accepts unset optional numbers as omitted fields or GROQ nulls", () => {
+    expect(validatePublishable(base, references)).toEqual({ ok: true });
+    expect(validatePublishable({ ...base, servings: null, prepMinutes: null, cookMinutes: null }, references)).toEqual({ ok: true });
+  });
+
+  it("accepts positive integer optional numbers", () => {
+    expect(validatePublishable({ ...base, servings: 1, prepMinutes: 20, cookMinutes: 45 }, references)).toEqual({ ok: true });
+  });
+
+  it.each(["servings", "prepMinutes", "cookMinutes"] as const)("rejects invalid %s values", field => {
+    for (const value of [0, -1, 1.5, "2"]) {
+      expect(validatePublishable({ ...base, [field]: value }, references).ok).toBe(false);
+    }
+  });
+
   it("requires nonempty ordered content and meaningful image alt text", () => {
     expect(validatePublishable({ ...base, ingredients: [] }, references).ok).toBe(false);
     expect(validatePublishable({ ...base, steps: [{ _key: "s1", text: " " }] }, references).ok).toBe(false);

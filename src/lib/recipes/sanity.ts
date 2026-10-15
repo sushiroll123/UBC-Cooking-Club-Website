@@ -3,7 +3,10 @@ import { recipeImageUrl } from "@/lib/sanity/image";
 import { validatePublishable } from "./validation";
 import type { Recipe, SanityRecipeDocument } from "./types";
 
-type PublicDocument = SanityRecipeDocument & {
+type PublicDocument = Omit<SanityRecipeDocument, "servings" | "prepMinutes" | "cookMinutes"> & {
+  servings?: number | null;
+  prepMinutes?: number | null;
+  cookMinutes?: number | null;
   asset?: { _id: string; mimeType: string };
   tagsResolved?: ({ _id: string; label: string; approved: boolean; availableForSubmissions: boolean } | null)[];
 };
@@ -41,9 +44,9 @@ function project(doc: PublicDocument, connection: SanityConnection): Recipe | nu
     tags: doc.tags.map(tag => ({ id: tag._ref, label: labels.get(tag._ref)! })),
     source: doc.source,
     authorName: doc.authorName,
-    servings: doc.servings,
-    prepMinutes: doc.prepMinutes,
-    cookMinutes: doc.cookMinutes,
+    servings: doc.servings ?? undefined,
+    prepMinutes: doc.prepMinutes ?? undefined,
+    cookMinutes: doc.cookMinutes ?? undefined,
     sortOrder: doc.sortOrder,
   };
 }

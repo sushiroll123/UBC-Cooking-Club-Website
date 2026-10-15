@@ -39,7 +39,7 @@ export function validatePublishable(recipe: unknown, resolved: ResolvedReference
     }
   }
   for (const field of ["servings", "prepMinutes", "cookMinutes"] as const) {
-    if (item[field] !== undefined && (!Number.isInteger(item[field]) || (item[field] as number) <= 0)) errors.push(`${field} must be positive`);
+    if (item[field] != null && (!Number.isInteger(item[field]) || (item[field] as number) <= 0)) errors.push(`${field} must be positive`);
   }
   return errors.length ? { ok: false, errors } : { ok: true };
 }

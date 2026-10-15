@@ -14,6 +14,25 @@ const raw = {
   source: "club", sortOrder: 0, email: "private@example.com",
 };
 
+// GROQ includes projected keys with null values when these fields are unset.
+const groqRecipe = {
+  _id: "recipe-onigiriworkshop", _type: "recipe",
+  slug: { _type: "slug", current: "onigiriworkshop" },
+  title: "Onigiri Workshop", description: "Rice balls",
+  ingredients: [{ _key: "i1", _type: "ingredientsItem", text: "1 kg rice" }],
+  steps: [{ _key: "s1", _type: "stepsItem", text: "Cook rice" }],
+  image: { _type: "image", asset: { _type: "reference", _ref: "image-good-100x100-webp" }, alt: "Onigiri" },
+  tags: [{ _type: "reference", _ref: "tag-japanese", _key: "t1" }],
+  asset: { _id: "image-good-100x100-webp", mimeType: "image/webp" },
+  tagsResolved: [{ _id: "tag-japanese", label: "Japanese", approved: true, availableForSubmissions: false }],
+  source: "club", sortOrder: 0,
+  authorName: null,
+  servings: null,
+  prepMinutes: null,
+  cookMinutes: null,
+};
+const connection = { projectId: "1m7uu6hy", dataset: "development" };
+
 describe("recipe repository", () => {
   it("retains all 11 legacy URLs with the static reader", async () => {
     const recipes = await staticRecipeReader.list();
@@ -38,6 +57,7 @@ describe("recipe repository", () => {
     expect(recipes[0].slug).toBe("onigiriworkshop");
     expect(recipes[0].ingredients).toEqual(["1 kg rice"]);
     expect(recipes[0]).not.toHaveProperty("email");
+    expect(recipes[0]).toMatchObject({ servings: undefined, prepMinutes: undefined, cookMinutes: undefined });
     expect(calls[0]).toContain('path("drafts.**")');
   });
 
@@ -46,6 +66,38 @@ describe("recipe repository", () => {
     const client = { fetch: async () => [broken, raw] };
     const cms = createSanityRecipeReader(client, { projectId: "1m7uu6hy", dataset: "development" });
     expect((await cms.list()).map(recipe => recipe.slug)).toEqual(["onigiriworkshop"]);
+  });
+
+  it("lists a GROQ recipe with null optional numbers as unset", async () => {
+    const cms = createSanityRecipeReader({ fetch: async () => [groqRecipe] }, connection);
+    const recipes = await cms.list();
+    expect(recipes.map(recipe => recipe.slug)).toEqual(["onigiriworkshop"]);
+    expect(recipes[0]).toMatchObject({ servings: undefined, prepMinutes: undefined, cookMinutes: undefined });
+  });
+
+  it("returns a GROQ recipe with null optional numbers by slug", async () => {
+    const cms = createSanityRecipeReader({ fetch: async () => groqRecipe }, connection);
+    const recipe = await cms.get("onigiriworkshop");
+    expect(recipe?.slug).toBe("onigiriworkshop");
+    expect(recipe).toMatchObject({ servings: undefined, prepMinutes: undefined, cookMinutes: undefined });
+  });
+
+  it("preserves valid positive integers in listing and detail results", async () => {
+    const document = { ...groqRecipe, servings: 1, prepMinutes: 20, cookMinutes: 45 };
+    const listing = createSanityRecipeReader({ fetch: async () => [document] }, connection);
+    const detail = createSanityRecipeReader({ fetch: async () => document }, connection);
+    expect((await listing.list())[0]).toMatchObject({ servings: 1, prepMinutes: 20, cookMinutes: 45 });
+    expect(await detail.get("onigiriworkshop")).toMatchObject({ servings: 1, prepMinutes: 20, cookMinutes: 45 });
+  });
+
+  it.each(["servings", "prepMinutes", "cookMinutes"] as const)("filters invalid %s values from listing and detail", async field => {
+    for (const value of [0, -1, 1.5, "2"]) {
+      const document = { ...groqRecipe, [field]: value };
+      const listing = createSanityRecipeReader({ fetch: async () => [document] }, connection);
+      const detail = createSanityRecipeReader({ fetch: async () => document }, connection);
+      expect(await listing.list()).toEqual([]);
+      expect(await detail.get("onigiriworkshop")).toBeNull();
+    }
   });
 
   it("rejects unknown source configuration", () => {
