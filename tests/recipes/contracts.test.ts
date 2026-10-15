@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import { validatePublishable } from "@/lib/recipes/validation";
 import { makePublishedClient } from "@/lib/sanity/client";
 import { recipeImageUrl } from "@/lib/sanity/image";
-import { validateStudioRecipe } from "../../studio/schemaTypes/recipe";
 
 const base = {
   _type: "recipe",
@@ -77,18 +76,5 @@ describe("public Sanity access", () => {
     expect(url).toContain("w=400");
     expect(url).toContain("h=200");
     expect(url).toContain("rect=");
-  });
-});
-
-describe("Studio publication validation", () => {
-  it("resolves assets and tags before accepting a recipe", async () => {
-    const client = { fetch: async () => [
-      { _id: "image-good-100x100-webp", mimeType: "image/webp" },
-      { _id: "tag-japanese", approved: true, availableForSubmissions: false },
-    ] };
-    expect(await validateStudioRecipe(base, client)).toBe(true);
-    expect(await validateStudioRecipe({ ...base, image: { alt: "Onigiri" } }, client)).not.toBe(true);
-    expect(await validateStudioRecipe(base, { fetch: async () => [{ _id: "tag-japanese", approved: true }] })).not.toBe(true);
-    expect(await validateStudioRecipe(base, { fetch: async () => [{ _id: "image-good-100x100-webp", mimeType: "image/webp" }, { _id: "tag-japanese", approved: false }] })).not.toBe(true);
   });
 });

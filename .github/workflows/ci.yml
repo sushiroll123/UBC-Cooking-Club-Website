@@ -26,5 +26,6 @@ jobs:
         env:
           SANITY_STUDIO_PROJECT_ID: 1m7uu6hy
           SANITY_STUDIO_DATASET: development
+      - run: npm run test:studio
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e

@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "test:studio": "vitest run --config vitest.studio.config.mts",
     "test:e2e": "playwright test",
     "recipes:import": "node --import tsx scripts/recipes/import.ts",
     "recipes:verify": "node --import tsx scripts/recipes/verify.ts"

@@ -1,29 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { readLegacyRecipes } from "../../scripts/recipes/legacy";
-import { importRecipes, type ImportClient } from "../../scripts/recipes/import";
+import { importRecipes } from "../../scripts/recipes/import";
 import { verifyImport } from "../../scripts/recipes/verify";
-import { recipe as recipeSchema } from "../../studio/schemaTypes/recipe";
-
-function fakeClient() {
-  const documents = new Map<string, Record<string, unknown>>();
-  const assets = new Map<string, { _id: string; sha1hash: string; mimeType: string }>();
-  const writeCalls: string[] = [];
-  const client: ImportClient = {
-    async getDocument(id) { return documents.get(id) ?? null; },
-    async createIfNotExists(doc) { writeCalls.push(doc._id); if (!documents.has(doc._id)) documents.set(doc._id, structuredClone(doc)); },
-    async findAssetBySha1(hash) { return assets.get(hash) ?? null; },
-    async uploadAsset(bytes, filename, hash) {
-      writeCalls.push(`asset:${filename}`);
-      const asset = { _id: `image-${hash}-100x100-webp`, sha1hash: hash, mimeType: "image/webp" };
-      assets.set(hash, asset);
-      return asset;
-    },
-    async getAsset(id) { return [...assets.values()].find(asset => asset._id === id) ?? null; },
-    async listImportedRecipes() { return [...documents.values()].filter(doc => doc._type === "recipe"); },
-    async getTags(ids) { return ids.map(id => documents.get(id)).filter((tag): tag is Record<string, unknown> => Boolean(tag)); },
-  };
-  return { client, documents, assets, writeCalls };
-}
+import { fakeClient } from "../helpers/import-client";
 
 describe("legacy recipe migration", () => {
   it("reads the 11 source records and matching local images", () => {
@@ -46,10 +25,9 @@ describe("legacy recipe migration", () => {
     expect(first.createdRecipes).toBe(11);
     const legacy = readLegacyRecipes()[0];
     const document = fake.documents.get(`drafts.recipe-${legacy.id}`)!;
-    const fields = recipeSchema.fields as unknown as { name: string; of?: { name?: string; type: string }[] }[];
     expect((document.slug as { _type?: string })._type).toBe("slug");
     for (const field of ["ingredients", "steps"] as const) {
-      const memberType = fields.find(item => item.name === field)?.of?.[0].name;
+      const memberType = field === "ingredients" ? "ingredientsItem" : "stepsItem";
       expect((document[field] as { _type?: string }[]).every(item => item._type === memberType)).toBe(true);
     }
     expect((document.image as { _type?: string; asset: { _type?: string } })._type).toBe("image");
