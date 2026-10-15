@@ -72,13 +72,13 @@ export async function importRecipes(options: ImportOptions): Promise<ImportRepor
     const document: SanityRecipeDocument = {
       _id: `drafts.${id}`,
       _type: "recipe",
-      slug: { current: recipe.id },
+      slug: { _type: "slug", current: recipe.id },
       title: recipe.title,
       description: recipe.description,
-      ingredients: recipe.ingredients.map((text, index) => ({ _key: `ingredient-${index}`, text })),
-      steps: recipe.steps.map((text, index) => ({ _key: `step-${index}`, text })),
-      image: { asset: { _ref: asset._id }, alt: recipe.title },
-      tags: recipe.tags.map((label, index) => ({ _key: `tag-${index}`, _ref: legacyTagId(label) })),
+      ingredients: recipe.ingredients.map((text, index) => ({ _key: `ingredient-${index}`, _type: "ingredientsItem", text })),
+      steps: recipe.steps.map((text, index) => ({ _key: `step-${index}`, _type: "stepsItem", text })),
+      image: { _type: "image", asset: { _type: "reference", _ref: asset._id }, alt: recipe.title },
+      tags: recipe.tags.map((label, index) => ({ _key: `tag-${index}`, _type: "reference", _ref: legacyTagId(label) })),
       source: "club",
       sortOrder: recipe.sortOrder,
     };

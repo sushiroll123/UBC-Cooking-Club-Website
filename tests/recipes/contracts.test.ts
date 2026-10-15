@@ -41,6 +41,12 @@ describe("publishable recipe contract", () => {
     expect(validatePublishable({ ...base, steps: [{ _key: "s1", text: " " }] }, references).ok).toBe(false);
     expect(validatePublishable({ ...base, image: { ...base.image, alt: " " } }, references).ok).toBe(false);
   });
+
+  it("rejects slugs the publication webhook cannot refresh", () => {
+    expect(validatePublishable({ ...base, slug: { current: "Bad Slug" } }, references).ok).toBe(false);
+    expect(validatePublishable({ ...base, slug: { current: "a".repeat(129) } }, references).ok).toBe(false);
+    expect(validatePublishable({ ...base, slug: { current: "a".repeat(128) } }, references).ok).toBe(true);
+  });
 });
 
 describe("public Sanity access", () => {

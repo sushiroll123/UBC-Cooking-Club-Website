@@ -22,22 +22,28 @@ export async function verifyImport(options: VerifyOptions): Promise<ParityReport
     foundCount++;
     const compare = (name: string, actual: unknown, expected: unknown) => { if (!same(actual, expected)) differences.push(`${recipe.id}: ${name} differs`); };
     compare("slug", (field(document, "slug") as { current?: string } | undefined)?.current, recipe.id);
+    compare("slug type", (field(document, "slug") as { _type?: string } | undefined)?._type, "slug");
     compare("title", field(document, "title"), recipe.title);
     compare("description", field(document, "description"), recipe.description);
     compare("source", field(document, "source"), "club");
     compare("sortOrder", field(document, "sortOrder"), recipe.sortOrder);
     for (const name of ["ingredients", "steps"] as const) {
-      const items = field(document, name) as { _key?: string; text?: string }[] | undefined;
+      const items = field(document, name) as { _key?: string; _type?: string; text?: string }[] | undefined;
       compare(name, items?.map(item => item.text), recipe[name]);
       compare(`${name} keys`, items?.map(item => item._key), recipe[name].map((_, index) => `${name === "steps" ? "step" : "ingredient"}-${index}`));
+      compare(`${name} types`, items?.map(item => item._type), recipe[name].map(() => `${name}Item`));
     }
     for (const name of ["servings", "prepMinutes", "cookMinutes"] as const) compare(name, field(document, name), undefined);
-    const image = field(document, "image") as { asset?: { _ref?: string }; alt?: string } | undefined;
+    const image = field(document, "image") as { _type?: string; asset?: { _type?: string; _ref?: string }; alt?: string } | undefined;
     compare("image alt", image?.alt, recipe.title);
+    compare("image type", image?._type, "image");
+    compare("image asset type", image?.asset?._type, "reference");
     const asset = image?.asset?._ref ? await client.getAsset(image.asset._ref) : null;
     if (!asset || asset.sha1hash !== recipe.imageSha1) differences.push(`${recipe.id}: image hash differs`);
-    const tagRefs = (field(document, "tags") as { _ref?: string }[] | undefined)?.map(tag => tag._ref);
+    const tagItems = field(document, "tags") as { _type?: string; _ref?: string }[] | undefined;
+    const tagRefs = tagItems?.map(tag => tag._ref);
     compare("tag references", tagRefs, recipe.tags.map(legacyTagId));
+    compare("tag types", tagItems?.map(tag => tag._type), recipe.tags.map(() => "reference"));
     for (const label of recipe.tags) {
       if (tagById.get(legacyTagId(label))?.label !== label) differences.push(`${recipe.id}: tag label differs (${label})`);
     }

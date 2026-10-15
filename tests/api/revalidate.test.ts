@@ -51,10 +51,12 @@ describe("Sanity publication webhook", () => {
 
   it("rejects malformed and oversized signed payloads", async () => {
     expect((await POST(await request({ type: "recipe", afterSlug: "../bad" }))).status).toBe(400);
+    expect((await POST(await request({ type: "recipe", afterSlug: "a".repeat(129) }))).status).toBe(400);
+    expect((await POST(await request({ type: "recipe", afterSlug: "a".repeat(128) }))).status).toBe(200);
     expect((await POST(await request({ type: "tag", dataset: "production" }))).status).toBe(400);
     expect((await POST(await request({ type: "tag", projectId: "awbpvwle" }))).status).toBe(400);
     expect((await POST(await request({ type: "recipe", beforeSlug: "a".repeat(70_000) }))).status).toBe(413);
-    expect(revalidateTag).not.toHaveBeenCalled();
+    expect(revalidateTag).toHaveBeenCalledTimes(1);
   });
 
   it("fails closed without a configured secret", async () => {

@@ -13,7 +13,7 @@ export function validatePublishable(recipe: unknown, resolved: ResolvedReference
   const item = record(recipe);
   const errors: string[] = [];
   if (item._type !== "recipe") errors.push("Recipe type is required");
-  if (!text(record(item.slug).current)) errors.push("Slug is required");
+  if (!validRecipeSlug(record(item.slug).current)) errors.push("Slug must be a lowercase URL segment of at most 128 characters");
   if (!text(item.title)) errors.push("Title is required");
   if (!text(item.description)) errors.push("Description is required");
   if (item.source !== "club" && item.source !== "community") errors.push("Source is required");
@@ -43,3 +43,4 @@ export function validatePublishable(recipe: unknown, resolved: ResolvedReference
   }
   return errors.length ? { ok: false, errors } : { ok: true };
 }
+import { validRecipeSlug } from "./slug";

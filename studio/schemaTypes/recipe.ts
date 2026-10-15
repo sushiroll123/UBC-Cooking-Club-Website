@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { validatePublishable, type ResolvedReferences } from "../../src/lib/recipes/validation";
+import { validRecipeSlug } from "../../src/lib/recipes/slug";
 
 type ValidationClient = { fetch: (query: string, params: { ids: string[] }) => Promise<Array<{ _id: string; mimeType?: string; approved?: boolean; availableForSubmissions?: boolean }>> };
 
@@ -34,7 +35,7 @@ export const recipe = defineType({
   type: "document",
   fields: [
     defineField({ name: "title", type: "string", validation: Rule => Rule.required() }),
-    defineField({ name: "slug", type: "slug", options: { source: "title", maxLength: 200 }, validation: Rule => Rule.required() }),
+    defineField({ name: "slug", type: "slug", options: { source: "title", maxLength: 128 }, validation: Rule => Rule.required().custom(value => validRecipeSlug(value?.current) ? true : "Use lowercase letters, numbers, and single hyphens (maximum 128 characters)") }),
     defineField({ name: "description", type: "text", validation: Rule => Rule.required() }),
     orderedText("ingredients", "Ingredients"),
     orderedText("steps", "Steps"),

@@ -41,6 +41,13 @@ describe("recipe repository", () => {
     expect(calls[0]).toContain('path("drafts.**")');
   });
 
+  it("omits a recipe with a broken tag while retaining valid published recipes", async () => {
+    const broken = { ...raw, _id: "recipe-broken", tagsResolved: [null] };
+    const client = { fetch: async () => [broken, raw] };
+    const cms = createSanityRecipeReader(client, { projectId: "1m7uu6hy", dataset: "development" });
+    expect((await cms.list()).map(recipe => recipe.slug)).toEqual(["onigiriworkshop"]);
+  });
+
   it("rejects unknown source configuration", () => {
     expect(() => createRecipeRepository("fallback", staticRecipeReader, staticRecipeReader)).toThrow();
   });

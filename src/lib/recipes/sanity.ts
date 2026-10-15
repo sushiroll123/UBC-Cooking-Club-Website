@@ -5,7 +5,7 @@ import type { Recipe, SanityRecipeDocument } from "./types";
 
 type PublicDocument = SanityRecipeDocument & {
   asset?: { _id: string; mimeType: string };
-  tagsResolved?: { _id: string; label: string; approved: boolean; availableForSubmissions: boolean }[];
+  tagsResolved?: ({ _id: string; label: string; approved: boolean; availableForSubmissions: boolean } | null)[];
 };
 type Fetcher = { fetch(query: string, params?: Record<string, unknown>, options?: { next: { revalidate: number; tags: string[] } }): Promise<unknown> };
 
@@ -21,12 +21,14 @@ const detailQuery = `*[${published} && slug.current == $slug][0] {${fields}}`;
 
 function project(doc: PublicDocument, connection: SanityConnection): Recipe | null {
   if (doc._id.startsWith("drafts.")) return null;
+  if (!doc.tagsResolved || doc.tagsResolved.some(tag => !tag || typeof tag._id !== "string")) return null;
+  const tagsResolved = doc.tagsResolved.filter((tag): tag is NonNullable<typeof tag> => tag !== null);
   const refs = {
     assets: doc.asset ? { [doc.asset._id]: doc.asset } : {},
-    tags: Object.fromEntries((doc.tagsResolved || []).map(tag => [tag._id, tag])),
+    tags: Object.fromEntries(tagsResolved.map(tag => [tag._id, tag])),
   };
-  if (!validatePublishable(doc, refs).ok || !doc.tagsResolved || !doc.asset) return null;
-  const labels = new Map(doc.tagsResolved.map(tag => [tag._id, tag.label]));
+  if (!validatePublishable(doc, refs).ok || !doc.asset) return null;
+  const labels = new Map(tagsResolved.map(tag => [tag._id, tag.label]));
   if (doc.tags.some(tag => !labels.get(tag._ref))) return null;
   return {
     id: doc._id,

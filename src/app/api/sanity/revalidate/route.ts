@@ -1,10 +1,9 @@
 import { isValidSignature } from "@sanity/webhook";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { validRecipeSlug } from "@/lib/recipes/slug";
 
 export const runtime = "nodejs";
 const maxBodyBytes = 64 * 1024;
-const validSlug = (value: unknown): value is string =>
-  typeof value === "string" && value.length <= 128 && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 
 type Event = { type: "recipe" | "tag"; beforeSlug: string | null; afterSlug: string | null };
 
@@ -15,7 +14,7 @@ function parseEvent(value: unknown): Event | null {
   if (input.type !== "recipe" && input.type !== "tag") return null;
   const beforeSlug = input.beforeSlug ?? null;
   const afterSlug = input.afterSlug ?? null;
-  if ((beforeSlug !== null && !validSlug(beforeSlug)) || (afterSlug !== null && !validSlug(afterSlug))) return null;
+  if ((beforeSlug !== null && !validRecipeSlug(beforeSlug)) || (afterSlug !== null && !validRecipeSlug(afterSlug))) return null;
   if (input.type === "recipe" && beforeSlug === null && afterSlug === null) return null;
   return { type: input.type, beforeSlug, afterSlug };
 }

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { readLegacyRecipes } from "../../scripts/recipes/legacy";
 import { importRecipes, type ImportClient } from "../../scripts/recipes/import";
 import { verifyImport } from "../../scripts/recipes/verify";
+import { recipe as recipeSchema } from "../../studio/schemaTypes/recipe";
 
 function fakeClient() {
   const documents = new Map<string, Record<string, unknown>>();
@@ -45,6 +46,15 @@ describe("legacy recipe migration", () => {
     expect(first.createdRecipes).toBe(11);
     const legacy = readLegacyRecipes()[0];
     const document = fake.documents.get(`drafts.recipe-${legacy.id}`)!;
+    const fields = recipeSchema.fields as unknown as { name: string; of?: { name?: string; type: string }[] }[];
+    expect((document.slug as { _type?: string })._type).toBe("slug");
+    for (const field of ["ingredients", "steps"] as const) {
+      const memberType = fields.find(item => item.name === field)?.of?.[0].name;
+      expect((document[field] as { _type?: string }[]).every(item => item._type === memberType)).toBe(true);
+    }
+    expect((document.image as { _type?: string; asset: { _type?: string } })._type).toBe("image");
+    expect((document.image as { asset: { _type?: string } }).asset._type).toBe("reference");
+    expect((document.tags as { _type?: string }[]).every(tag => tag._type === "reference")).toBe(true);
     expect((document.slug as { current: string }).current).toBe(legacy.id);
     expect((document.steps as { text: string }[]).map(step => step.text)).toEqual(legacy.steps);
     expect(document).not.toHaveProperty("servings");
@@ -66,5 +76,9 @@ describe("legacy recipe migration", () => {
     fake.documents.get(`drafts.recipe-${legacy.id}`)!.description = legacy.description;
     fake.assets.get(legacy.imageSha1)!.sha1hash = "wrong";
     expect((await verifyImport({ dataset: "development", client: fake.client })).differences).toContain(`${legacy.id}: image hash differs`);
+    fake.assets.get(legacy.imageSha1)!.sha1hash = legacy.imageSha1;
+    const document = fake.documents.get(`drafts.recipe-${legacy.id}`)!;
+    (document.ingredients as { _type?: string }[])[0]._type = undefined;
+    expect((await verifyImport({ dataset: "development", client: fake.client })).differences).toEqual(expect.arrayContaining([`${legacy.id}: ingredients types differs`]));
   });
 });
