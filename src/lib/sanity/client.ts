@@ -18,7 +18,8 @@ export function makePublishedClient(connection: SanityConnection = sanityConnect
     projectId: connection.projectId,
     dataset: connection.dataset,
     apiVersion: connection.apiVersion || "2026-10-11",
-    useCdn: true,
+    // Next owns the cache; refills after webhooks must read current Content Lake data.
+    useCdn: false,
     perspective: "published",
   });
 }

@@ -64,9 +64,9 @@ describe("publishable recipe contract", () => {
 });
 
 describe("public Sanity access", () => {
-  it("uses an anonymous published reader", () => {
+  it("uses an anonymous published reader that refills Next's cache from the origin", () => {
     const client = makePublishedClient({ projectId: "abc12345", dataset: "development" });
-    expect(client.config()).toMatchObject({ projectId: "abc12345", dataset: "development", perspective: "published", useCdn: true });
+    expect(client.config()).toMatchObject({ projectId: "abc12345", dataset: "development", perspective: "published", useCdn: false });
     expect(client.config().token).toBeUndefined();
   });
 
