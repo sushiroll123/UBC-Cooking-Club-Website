@@ -2,7 +2,7 @@ name: CI
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, sanity-db-cms-pg]
   push:
     branches: [main]
 
@@ -20,5 +20,12 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
+      - run: npm --prefix studio ci
+      - run: npm --prefix studio run typecheck
+      - run: npm --prefix studio run build
+        env:
+          SANITY_STUDIO_PROJECT_ID: 1m7uu6hy
+          SANITY_STUDIO_DATASET: development
+      - run: npm run test:studio
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e

@@ -1,0 +1,22 @@
+{
+  "name": "ubc-cooking-club-studio",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "sanity dev",
+    "typecheck": "tsc --noEmit",
+    "build": "sanity build",
+    "deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "sanity": "3.99.0",
+    "styled-components": "6.1.15"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.26",
+    "@types/react-dom": "18.3.7",
+    "typescript": "5.9.3"
+  }
+}

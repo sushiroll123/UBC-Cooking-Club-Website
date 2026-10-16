@@ -1,6 +1,6 @@
 import Image from "@/components/Image";
 import BulletIcons from "@/components/menu/BulletIcons";
-import { menuData } from "@/data";
+import { getPublishedRecipe, listPublishedRecipes } from "@/lib/recipes/repository";
 import { notFound } from "next/navigation";
 import {
   Box,
@@ -16,10 +16,13 @@ import {
 } from "@chakra-ui/react";
 
 export async function generateStaticParams() {
-  return menuData.map((post) => ({
-    id: post.id,
+  const recipes = await listPublishedRecipes();
+  return recipes.map((recipe) => ({
+    id: recipe.slug,
   }));
 }
+
+export const revalidate = 300;
 
 export default async function Recipe({
   params,
@@ -28,7 +31,7 @@ export default async function Recipe({
 }) {
   const id = (await params).id;
 
-  const menu = menuData.find((data) => data.id === id);
+  const menu = await getPublishedRecipe(id);
   if (!menu) notFound();
 
   return (
@@ -84,8 +87,8 @@ export default async function Recipe({
           position={"relative"}
         >
           <Image
-            src={`/menu/workshops/${menu.id}.webp`}
-            alt="food"
+            src={menu.image.url}
+            alt={menu.image.alt}
             width={500}
             height={300}
             w={"100%"}
