@@ -1,8 +1,12 @@
 import Image from "@/components/Image";
 import Recipes from "@/components/menu/Recipes";
+import { listPublishedRecipes } from "@/lib/recipes/repository";
 import { Box, Container, Heading } from "@chakra-ui/react";
 
-export default function MenuPage() {
+export const revalidate = 300;
+
+export default async function MenuPage() {
+  const recipes = await listPublishedRecipes();
   return (
     <Container maxW={"7xl"}>
       <Box height={"20vh"} />
@@ -23,7 +27,7 @@ export default function MenuPage() {
           right={0}
         />
       </Heading>
-      <Recipes />
+      <Recipes recipes={recipes} />
     </Container>
   );
 }

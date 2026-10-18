@@ -1,5 +1,5 @@
 import Image from "@/components/Image";
-import { menuData } from "@/data";
+import type { Recipe } from "@/lib/recipes/types";
 import {
   Container,
   Heading,
@@ -11,21 +11,21 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 
-export default function Recipes() {
+export default function Recipes({ recipes }: { recipes: Recipe[] }) {
   return (
     <SimpleGrid gap={6} columns={{ base: 1, md: 2, lg: 3 }}>
-      {menuData.map((card, idx) => {
+      {recipes.map((card) => {
         return (
           <LinkBox
-            key={idx}
+            key={card.id}
             background={"subtle"}
             h={{ base: "fit-content", md: 440 }}
             borderRadius={"2xl"}
           >
-            <LinkOverlay as={NextLink} href={`/menu/${card.id}`} />
+            <LinkOverlay as={NextLink} href={`/menu/${card.slug}`} />
             <Image
-              src={`/menu/workshops/${card.id}.webp`}
-              alt="burger"
+              src={card.image.url}
+              alt={card.image.alt}
               width={400}
               height={200}
               borderRadius={"2xl"}
@@ -38,10 +38,10 @@ export default function Recipes() {
                 {card.title}
               </Heading>
               <Text fontSize={"sm"}>{card.description}</Text>
-              {card.tags.map((tag, idx) => {
+              {card.tags.map((tag) => {
                 return (
                   <Tag
-                    key={idx}
+                    key={tag.id}
                     size={"sm"}
                     variant="subtle"
                     colorScheme="orange"
@@ -50,7 +50,7 @@ export default function Recipes() {
                     mr={2}
                     mt={3}
                   >
-                    {tag.toUpperCase()}
+                    {tag.label.toUpperCase()}
                   </Tag>
                 );
               })}

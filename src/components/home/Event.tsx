@@ -55,7 +55,7 @@ export default function Event() {
             <Box
               position={"relative"}
               width={{ base: "100%", md: 400, lg: "60%" }}
-              height={{ base: 300, md: 450 }}
+              height={{ base: 300, md: 500 }}
               background={"accent"}
             >
               <Image
