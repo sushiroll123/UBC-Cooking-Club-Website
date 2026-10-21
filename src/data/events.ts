@@ -23,7 +23,7 @@ export const upcomingEvents: EventType[] = [
   //   mapUrl: "",
   // },
   {
-    title: "Halloween Workshop",
+    title: "Halloween Desserts",
     imagePath: "/graphics/taco.png",
     date: "30",
     month: "Oct",
